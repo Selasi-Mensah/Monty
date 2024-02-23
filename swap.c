@@ -1,36 +1,31 @@
-
 #include "monty.h"
-
 /**
- * swap - swap the top two elements of the stack
- * @temp: pointer to the top of the stack in doubly linked list
- * @line_num: line number of opcode
- */
-void swap(stack_t **temp, int line_num)
+ * f_swap - adds the top two elements of the stack.
+ * @head: stack head
+ * @counter: line_number
+ * Return: no return
+*/
+void f_swap(stack_t **head, unsigned int counter)
 {
-	stack_t *first = *temp;
-	stack_t *second;
+	stack_t *h;
+	int len = 0, aux;
 
-	if (*temp == NULL)
+	h = *head;
+	while (h)
 	{
-		fprintf(stderr, "L%d: can't swap, stack too short\n", line_num);
+		h = h->next;
+		len++;
+	}
+	if (len < 2)
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-	else if ((*temp != NULL) && ((*temp)->next == NULL))
-	{
-		fprintf(stderr, "L%d: can't swap, stack too short\n", line_num);
-		exit(EXIT_FAILURE);
-	}
-	second = (*temp)->next;
-
-	first->prev = second;
-	first->next = second->next;
-	second->prev = NULL;
-	second->next = first;
-
-	if (first->next != NULL)
-		first->next->prev = first;
-
-	*temp = second;
+	h = *head;
+	aux = h->n;
+	h->n = h->next->n;
+	h->next->n = aux;
 }
-

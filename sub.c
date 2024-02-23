@@ -1,26 +1,29 @@
 #include "monty.h"
-
 /**
- * sub - remove the top element from the stack
- * @temp: pointer to the top of the stack in doubly linked list
- * @line_num: line number on command line
+  *f_sub- sustration
+  *@head: stack head
+  *@counter: line_number
+  *Return: no return
  */
-void sub(stack_t **temp, int line_num)
+void f_sub(stack_t **head, unsigned int counter)
 {
-	stack_t *first = *temp;
-	stack_t *second;
+	stack_t *aux;
+	int sus, nodes;
 
-	/* checking if list is empty */
-	if (*temp == NULL || (*temp != NULL && (*temp)->next == NULL))
+	aux = *head;
+	for (nodes = 0; aux != NULL; nodes++)
+		aux = aux->next;
+	if (nodes < 2)
 	{
-		fprintf(stderr, "L%d: can't sub, stack too short\n", line_num);
+		fprintf(stderr, "L%d: can't sub, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-	second = (*temp)->next;
-	second->n -= first->n;
-	*temp = (*temp)->next;
-
-	if (*temp != NULL)
-		(*temp)->prev = NULL;
-	free(first);
+	aux = *head;
+	sus = aux->next->n - aux->n;
+	aux->next->n = sus;
+	*head = aux->next;
+	free(aux);
 }

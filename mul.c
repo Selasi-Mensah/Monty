@@ -1,26 +1,32 @@
 #include "monty.h"
-
 /**
- * mul - remove the top element from the stack
- * @temp: pointer to the top of the stack in doubly linked list
- * @line_num: line number on command line
- */
-void mul(stack_t **temp, int line_num)
+ * f_mul - multiplies the top two elements of the stack.
+ * @head: stack head
+ * @counter: line_number
+ * Return: no return
+*/
+void f_mul(stack_t **head, unsigned int counter)
 {
-	stack_t *first = *temp;
-	stack_t *second;
+	stack_t *h;
+	int len = 0, aux;
 
-	/* checking if list is empty */
-	if (*temp == NULL || (*temp != NULL && (*temp)->next == NULL))
+	h = *head;
+	while (h)
 	{
-		fprintf(stderr, "L%d: can't mul, stack too short\n", line_num);
+		h = h->next;
+		len++;
+	}
+	if (len < 2)
+	{
+		fprintf(stderr, "L%d: can't mul, stack too short\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
 		exit(EXIT_FAILURE);
 	}
-	second = (*temp)->next;
-	second->n *= first->n;
-	*temp = (*temp)->next;
-
-	if (*temp != NULL)
-		(*temp)->prev = NULL;
-	free(first);
+	h = *head;
+	aux = h->next->n * h->n;
+	h->next->n = aux;
+	*head = h->next;
+	free(h);
 }
